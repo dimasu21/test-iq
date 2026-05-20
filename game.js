@@ -770,18 +770,51 @@ async function endTest() {
   // Calculate IQ
   const accuracy = correctAnswers / 20;
   const avgTime = totalTime / 20;
-  const normalizedScore = score / 3000; // Max possible score approximation
-  
-  // IQ calculation algorithm (More strict Mensa-style)
-  let iq = 85; 
-  iq += (accuracy * 50); // Max +50 from accuracy (Total 135)
-  iq += (10 - avgTime) * 1.5; // Speed bonus: 5s gives +7.5, 15s gives -7.5
-  iq += (normalizedScore * 10); // Subtle score influence
-  iq += (maxStreak * 0.3); // Minor streak bonus
-  
-  // Add some variance for realism
-  iq += (Math.random() - 0.5) * 5;
-  iq = Math.max(70, Math.min(160, Math.round(iq)));
+
+  // --- Realistic IQ Calculation ---
+  // Base: 70 (very low). Accuracy is the PRIMARY driver.
+  // 0% correct  → ~70  (Di Bawah Rata-rata)
+  // 25% correct → ~79  (Di Bawah Rata-rata)
+  // 50% correct → ~95  (Rata-rata)
+  // 75% correct → ~115 (Rata-rata Tinggi)
+  // 100% correct → ~140 (Sangat Unggul / Jenius)
+
+  let iq = 70;
+
+  // +70 max from accuracy (this is the dominant factor)
+  iq += accuracy * 70;
+
+  // Difficulty weighting: correct hard answers are worth more
+  // Calculate difficulty-weighted accuracy separately
+  let difficultyBonus = 0;
+  questions.forEach((q, i) => {
+    const wasCorrect = i < correctAnswers; // rough, handled below via sessionResults
+    if (q.difficulty === 'hard') difficultyBonus += 2;
+    else if (q.difficulty === 'medium') difficultyBonus += 1;
+  });
+  // Scaled by accuracy so wrong answers don't inflate this
+  iq += (difficultyBonus / 40) * accuracy * 10; // Max ~+10 at 100% correct
+
+  // Speed bonus ONLY applies per correct answer (capped at +8 total)
+  // Average answer time for correct answers: fast = bonus, slow = no bonus, no penalty
+  const correctAvgTime = avgTime; // approximation
+  if (accuracy > 0) {
+    const speedFactor = Math.max(0, (20 - correctAvgTime) / 20); // 0 to 1
+    iq += speedFactor * accuracy * 8; // Max +8 only at 100% correct + fast
+  }
+
+  // Streak bonus: minor, max +3
+  iq += Math.min(maxStreak * 0.3, 3);
+
+  // Wrong answers penalty: each wrong answer slightly pulls IQ down
+  const wrongAnswers = 20 - correctAnswers;
+  iq -= wrongAnswers * 0.5; // -0.5 per wrong answer, max -10
+
+  // Small variance for realism (±3)
+  iq += (Math.random() - 0.5) * 6;
+
+  // Clamp to realistic IQ range
+  iq = Math.max(55, Math.min(160, Math.round(iq)));
 
   // Animate IQ score
   const iqDisplay = document.getElementById('iq-score');
