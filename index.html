@@ -168,7 +168,7 @@
       </div>
      </div>
      <!-- Progress -->
-     <div class="flex-1 mx-8">
+     <div class="flex-1 mx-2 sm:mx-8">
       <div class="flex justify-between text-sm font-bold mb-2 text-slate-400">
        <span class="uppercase tracking-widest">Pertanyaan <span id="q-num" class="text-slate-900">1</span>/20</span>
        <span id="streak-display" class="text-amber-600 hidden animate-bounce">🔥 <span id="streak-count">0</span> beruntun!</span>
@@ -196,7 +196,7 @@
        </div>
       </div>
       <!-- Main Card -->
-      <div class="glass-card rounded-[2.5rem] p-8 md:p-12 bg-white shadow-xl border border-slate-100 animate-slide-up relative overflow-hidden">
+      <div class="glass-card rounded-[2rem] sm:rounded-[2.5rem] p-5 sm:p-8 md:p-12 bg-white shadow-xl border border-slate-100 animate-slide-up relative overflow-hidden">
        <h2 id="question-text" class="text-2xl md:text-3xl text-slate-900 font-bold mb-10 leading-tight text-center">Memuat pertanyaan...</h2>
        <!-- Visual Area -->
        <div id="visual-area" class="hidden mb-10 flex justify-center">
@@ -264,16 +264,16 @@
        <svg class="w-24 h-24" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
       </div>
       <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-2 text-left">Statistik Global</p>
-      <div class="flex items-baseline gap-3 text-left">
+      <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-left">
        <span class="text-slate-400 text-sm">Skor Anda lebih tinggi dari</span>
-       <span class="font-display text-5xl font-black text-white" id="percentile">0%</span>
+       <span class="font-display text-4xl sm:text-5xl font-black text-white" id="percentile">0%</span>
        <span class="text-slate-400 text-sm">populasi dunia</span>
       </div>
      </div>
      
      <!-- Actions -->
      <div class="flex gap-4 justify-center">
-      <button onclick="restartTest()" class="px-12 py-5 bg-slate-900 text-white font-display font-bold text-xl rounded-2xl shadow-xl hover:bg-slate-800 hover:-translate-y-1 transition-all">
+      <button onclick="restartTest()" class="w-full sm:w-auto px-12 py-5 bg-slate-900 text-white font-display font-bold text-xl rounded-2xl shadow-xl hover:bg-slate-800 hover:-translate-y-1 transition-all">
        Coba Lagi
       </button>
      </div>
