@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain Spark IQ</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/Y4fFQ8q0/BRAIN-SPARK-IQ.png">
+  <!-- Primary Meta -->
+  <meta name="title" content="Brain Spark IQ">
+  <meta name="description" content="Uji kecerdasanmu, tingkatkan IQ, dan temukan potensi sejatimu dengan Brain Spark IQ.">
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://brainsparkiq.vercel.app/">
+  <meta property="og:title" content="Brain Spark IQ">
+  <meta property="og:description" content="Uji kecerdasanmu, tingkatkan IQ, dan temukan potensi sejatimu dengan Brain Spark IQ.">
+  <meta property="og:image" content="https://i.ibb.co/Y4fFQ8q0/BRAIN-SPARK-IQ.png">
+  <!-- Scripts & Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full font-body m-0 p-0">
+  <div id="app" class="h-full w-full overflow-x-hidden bg-slate-50">
+   
+   <!-- Start Screen -->
+   <div id="start-screen" class="min-h-full w-full flex flex-col items-center justify-center p-6">
+    <div class="text-center max-w-lg w-full">
+     <h1 id="title-display" class="font-display text-5xl md:text-7xl font-black text-slate-900 mb-6 tracking-tight">Brain Spark IQ</h1>
+     <p class="text-slate-600 text-lg md:text-xl mb-10 leading-relaxed">Uji kecerdasanmu dengan 20 pertanyaan menantang dari berbagai kategori. Temukan potensi kognitifmu!</p>
+     
+     <!-- Stats Preview -->
+     <div class="grid grid-cols-3 gap-4 mb-10">
+      <div class="glass-card rounded-2xl p-4 shadow-sm bg-white">
+       <div class="text-3xl mb-2">🎨</div>
+       <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Seni</div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 shadow-sm bg-white">
+       <div class="text-3xl mb-2">🧩</div>
+       <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Logika</div>
+      </div>
+      <div class="glass-card rounded-2xl p-4 shadow-sm bg-white">
+       <div class="text-3xl mb-2">🔢</div>
+       <div class="text-xs font-bold text-slate-500 uppercase tracking-wider">Matematika</div>
+      </div>
+     </div>
+     
+     <button id="start-btn" onclick="showCategorySelection()" class="group relative px-12 py-5 bg-slate-900 text-white font-display font-bold text-xl rounded-2xl shadow-xl hover:bg-slate-800 hover:-translate-y-1 transition-all duration-300">
+      <span id="start-btn-text">Mulai Tes</span>
+      <svg class="inline-block ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" viewbox="0 0 24 24" stroke="currentColor">
+       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      </svg>
+     </button>
+
+     <!-- Previous Results -->
+     <div id="prev-results" class="mt-12 hidden animate-fade-in">
+      <p class="text-slate-500 text-sm font-medium mb-3 uppercase tracking-widest">Skor Terbaikmu</p>
+      <div class="glass-card rounded-2xl px-8 py-4 inline-flex items-baseline bg-white shadow-sm">
+       <span id="best-iq" class="font-display text-4xl font-black text-slate-900">--</span>
+       <span class="text-slate-400 text-lg font-bold ml-2">IQ</span>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- Category Selection Screen -->
+   <div id="category-screen" class="min-h-full w-full hidden flex-col items-center justify-center p-6 bg-slate-50">
+    <div class="text-center max-w-4xl w-full">
+     <h2 class="font-display text-4xl md:text-5xl font-black text-slate-900 mb-4">Pilih Kategori Anda</h2>
+     <p class="text-slate-600 text-lg mb-2">Pilih 1 sampai 4 kategori untuk menguji kemampuanmu</p>
+     <p class="text-amber-600 font-bold text-sm mb-10 tracking-wide">Ketuk untuk memilih • <span id="selected-count" class="text-lg">0</span> dipilih</p>
+     
+     <!-- Category Grid -->
+     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-12">
+      <!-- Art -->
+      <button onclick="toggleCategory('art')" id="cat-art" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🎨</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Seni</div>
+       <div class="text-xs text-slate-500 leading-tight">Interpretasi pola & visual</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Logic -->
+      <button onclick="toggleCategory('logic')" id="cat-logic" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🧩</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Logika</div>
+       <div class="text-xs text-slate-500 leading-tight">Selesaikan teka-teki logika</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Math -->
+      <button onclick="toggleCategory('math')" id="cat-math" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🔢</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Matematika</div>
+       <div class="text-xs text-slate-500 leading-tight">Hitung jawaban numerik</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Spatial -->
+      <button onclick="toggleCategory('spatial')" id="cat-spatial" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">📐</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Spasial</div>
+       <div class="text-xs text-slate-500 leading-tight">Visualisasi bentuk & ruang</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Pattern -->
+      <button onclick="toggleCategory('pattern')" id="cat-pattern" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🔄</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Pola</div>
+       <div class="text-xs text-slate-500 leading-tight">Temukan urutan logis</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Verbal -->
+      <button onclick="toggleCategory('verbal')" id="cat-verbal" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">📝</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Verbal</div>
+       <div class="text-xs text-slate-500 leading-tight">Penalaran kata & bahasa</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+      <!-- Memory -->
+      <button onclick="toggleCategory('memory')" id="cat-memory" class="category-card glass-card rounded-3xl p-6 bg-white shadow-sm border-2 border-transparent transition-all duration-300 hover:shadow-md group">
+       <div class="text-5xl mb-4 group-hover:scale-110 transition-transform">🧠</div>
+       <div class="font-display text-lg font-bold text-slate-900 mb-1">Memori</div>
+       <div class="text-xs text-slate-500 leading-tight">Mengingat informasi visual</div>
+       <div class="category-check hidden mt-4">
+        <svg class="w-8 h-8 mx-auto text-amber-500" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+       </div>
+      </button>
+     </div>
+     
+     <!-- Action Buttons -->
+     <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <button onclick="backToStart()" class="w-full sm:w-auto px-10 py-4 glass-card rounded-2xl text-slate-600 font-display font-bold hover:bg-white hover:text-slate-900 transition-all border border-slate-200">
+       ← Kembali
+      </button>
+      <button id="continue-btn" onclick="startTestWithCategories()" disabled class="w-full sm:w-auto px-16 py-4 bg-slate-900 text-white font-display font-bold text-xl rounded-2xl shadow-xl hover:bg-slate-800 hover:-translate-y-1 transition-all duration-300 disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:shadow-none">
+       Lanjut 🚀
+      </button>
+     </div>
+    </div>
+   </div>
+
+   <!-- Quiz Screen -->
+   <div id="quiz-screen" class="min-h-full w-full hidden flex-col p-4 md:p-8 bg-slate-50">
+    <!-- Top Bar -->
+    <div class="flex items-center justify-between max-w-5xl mx-auto w-full mb-8">
+     <!-- Timer -->
+     <div class="relative w-20 h-20">
+      <svg class="w-full h-full transform -rotate-90">
+       <circle cx="40" cy="40" r="36" stroke="#e2e8f0" stroke-width="6" fill="none" />
+       <circle id="timer-circle" class="timer-ring" cx="40" cy="40" r="36" stroke="#f59e0b" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="226" stroke-dashoffset="0" />
+      </svg>
+      <div class="absolute inset-0 flex items-center justify-center">
+       <span id="timer-text" class="font-display text-xl text-slate-900 font-black">30</span>
+      </div>
+     </div>
+     <!-- Progress -->
+     <div class="flex-1 mx-8">
+      <div class="flex justify-between text-sm font-bold mb-2 text-slate-400">
+       <span class="uppercase tracking-widest">Pertanyaan <span id="q-num" class="text-slate-900">1</span>/20</span>
+       <span id="streak-display" class="text-amber-600 hidden animate-bounce">🔥 <span id="streak-count">0</span> beruntun!</span>
+      </div>
+      <div class="h-4 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+       <div id="progress-bar" class="h-full bg-slate-900 rounded-full transition-all duration-500" style="width: 5%"></div>
+      </div>
+     </div>
+     <!-- Score -->
+     <div class="glass-card rounded-2xl px-6 py-3 bg-white shadow-sm text-center">
+      <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block mb-1">Skor</span>
+      <span id="score-display" class="font-display text-2xl text-slate-900 font-black">0</span>
+     </div>
+    </div>
+
+    <!-- Question Card -->
+    <div class="flex-1 flex items-center justify-center py-4">
+     <div class="w-full max-w-3xl">
+      <!-- Category Badge -->
+      <div class="flex justify-center mb-6">
+       <div id="category-badge" class="inline-flex items-center gap-3 glass-card rounded-full px-6 py-2 bg-white shadow-sm border border-slate-100">
+        <span id="category-icon" class="text-xl">🧩</span>
+        <span id="category-text" class="text-sm font-bold text-slate-800 uppercase tracking-widest">Logika</span>
+        <span id="difficulty-badge" class="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-black uppercase">Mudah</span>
+       </div>
+      </div>
+      <!-- Main Card -->
+      <div class="glass-card rounded-[2.5rem] p-8 md:p-12 bg-white shadow-xl border border-slate-100 animate-slide-up relative overflow-hidden">
+       <h2 id="question-text" class="text-2xl md:text-3xl text-slate-900 font-bold mb-10 leading-tight text-center">Memuat pertanyaan...</h2>
+       <!-- Visual Area -->
+       <div id="visual-area" class="hidden mb-10 flex justify-center">
+        <div id="visual-content" class="glass-card rounded-2xl p-6 bg-slate-50 border border-slate-100"></div>
+       </div>
+       <!-- Options -->
+       <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Options rendered here -->
+       </div>
+      </div>
+      <!-- Hint -->
+      <div class="mt-8 text-center">
+       <button id="hint-btn" onclick="useHint()" class="inline-flex items-center gap-2 px-6 py-2 rounded-full text-slate-400 hover:text-amber-600 font-bold transition-all text-sm uppercase tracking-widest group">
+        <span class="text-xl group-hover:scale-110 transition-transform">💡</span> Gunakan Petunjuk (<span id="hints-left">3</span> tersisa)
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- Results Screen -->
+   <div id="results-screen" class="min-h-full w-full hidden flex-col items-center justify-center p-6 bg-slate-50">
+    <div id="confetti-container"></div>
+    <div class="text-center max-w-2xl w-full animate-slide-up">
+     <!-- IQ Circle -->
+     <div class="relative w-56 h-56 mx-auto mb-10">
+      <svg class="w-full h-full" viewbox="0 0 200 200">
+       <circle cx="100" cy="100" r="90" stroke="#e2e8f0" stroke-width="12" fill="none" />
+       <circle id="score-ring" cx="100" cy="100" r="90" stroke="#0f172a" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="565" stroke-dashoffset="565" transform="rotate(-90 100 100)" style="transition: stroke-dashoffset 2s ease-out" />
+      </svg>
+      <div class="absolute inset-0 flex flex-col items-center justify-center">
+       <span id="iq-score" class="font-display text-7xl font-black text-slate-900">0</span>
+       <span id="results-title-text" class="text-slate-400 text-sm font-bold uppercase tracking-widest mt-2">Skor IQ Anda</span>
+      </div>
+     </div>
+     
+     <!-- Rating -->
+     <div id="rating-badge" class="inline-block glass-card rounded-2xl px-10 py-3 mb-10 bg-white shadow-md border border-slate-100">
+      <span id="rating-text" class="font-display text-2xl font-black text-amber-600 uppercase tracking-tight">Menghitung...</span>
+     </div>
+     
+     <!-- Stats Grid -->
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+      <div class="glass-card rounded-2xl p-5 bg-white shadow-sm">
+       <div class="text-3xl font-display font-black text-slate-900" id="correct-count">0</div>
+       <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Benar</div>
+      </div>
+      <div class="glass-card rounded-2xl p-5 bg-white shadow-sm">
+       <div class="text-3xl font-display font-black text-slate-900" id="avg-time">0s</div>
+       <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Waktu Rata-rata</div>
+      </div>
+      <div class="glass-card rounded-2xl p-5 bg-white shadow-sm">
+       <div class="text-3xl font-display font-black text-slate-900" id="accuracy">0%</div>
+       <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Akurasi</div>
+      </div>
+      <div class="glass-card rounded-2xl p-5 bg-white shadow-sm">
+       <div class="text-3xl font-display font-black text-amber-600" id="max-streak">0</div>
+       <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Streak Terbaik</div>
+      </div>
+     </div>
+     
+     <!-- Percentile -->
+     <div class="glass-card rounded-3xl p-8 mb-10 bg-slate-900 text-white shadow-xl relative overflow-hidden group">
+      <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+       <svg class="w-24 h-24" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      </div>
+      <p class="text-slate-400 text-sm font-bold uppercase tracking-widest mb-2 text-left">Statistik Global</p>
+      <div class="flex items-baseline gap-3 text-left">
+       <span class="text-slate-400 text-sm">Skor Anda lebih tinggi dari</span>
+       <span class="font-display text-5xl font-black text-white" id="percentile">0%</span>
+       <span class="text-slate-400 text-sm">populasi dunia</span>
+      </div>
+     </div>
+     
+     <!-- Actions -->
+     <div class="flex gap-4 justify-center">
+      <button onclick="restartTest()" class="px-12 py-5 bg-slate-900 text-white font-display font-bold text-xl rounded-2xl shadow-xl hover:bg-slate-800 hover:-translate-y-1 transition-all">
+       Coba Lagi
+      </button>
+     </div>
+    </div>
+   </div>
+  </div>
+  
+  <script src="questions.js"></script>
+  <script src="game.js"></script>
+ </body>
+</html>
